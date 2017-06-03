@@ -13,19 +13,15 @@ def barycentric(pt1, pt2, pt3, n):
 	"""
 
 	# find unit normal vector given three points on a plane
-	vector1 = pt1 - pt2
-	vector2 = pt1 - pt3
-	normalVector = np.cross(vector1, vector2)
+	vectorU = pt2 - pt1
+	vectorV = pt3 - pt1
+	normalVector = np.cross(vectorU, vectorV)
 	#print(normalVector)
 	unitNorVec = normalVector/np.linalg.norm(normalVector)
 	#print(unitNorVec)
 
 	# find subdivision points in barycentric coordinates
 	points = [] #points includes the vertices of the original triangle
-	vectorU = pt2 - pt1
-	vectorV = pt3 - pt1
-	#print("U = " + str(vectorU))
-	#print("V = " + str(vectorV))
 	for i in range(0, 2**n+1):
 		for j in range(0, 2**n+1-i):
 			points.append(pt1 + (i/2.**n)*vectorU + (j/2.**n)*vectorV)
