@@ -1,5 +1,7 @@
 import math
 import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 def barycentric(pt1, pt2, pt3, n):
 
@@ -25,12 +27,47 @@ def barycentric(pt1, pt2, pt3, n):
 	for i in range(0, 2**n+1):
 		for j in range(0, 2**n+1-i):
 			points.append(pt1 + (i/2.**n)*vectorU + (j/2.**n)*vectorV)
-			#print(points)
+	print(unitNorVec)
+	#print(points)
 	#print(len(points))
-	
-	return unitNorVec, points
 
-pt1 = np.array([1,0,0])
-pt2 = np.array([0,1,0])
-pt3 = np.array([0,0,1])
-barycentric(pt1, pt2, pt3, 2)
+	return (points, unitNorVec)
+
+def plotP_V(points, unitNorVec):
+
+	"""
+	Plot all the subdivision points and the unit normal vectors
+
+	Input: points and unitNorVec returned from the barycentric function
+
+	Output: A 3d plot of points and vectors
+	"""
+
+	fig = plt.figure()
+	ax = fig.gca(projection='3d')
+
+	xs = []
+	ys = []
+	zs = []
+
+	u = unitNorVec[0]
+	v = unitNorVec[1]
+	w = unitNorVec[2]
+
+	for i in range(0, len(points)):
+		xs.append(points[i][0])
+		ys.append(points[i][1])
+		zs.append(points[i][2])
+
+	ax.plot(xs, ys, zs, 'o')
+	ax.quiver(xs, ys, zs, u, v, w, length=0.2, normalize=True)
+	ax.legend()
+
+	plt.show()
+
+pt1 = np.array([1,0,4])
+pt2 = np.array([0,2,0])
+pt3 = np.array([0,0,3])
+
+points, unitNorVec = barycentric(pt1, pt2, pt3, 3)
+plotP_V(points, unitNorVec)
