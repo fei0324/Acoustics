@@ -27,8 +27,8 @@ def barycentric(pt1, pt2, pt3, n):
 	for i in range(0, 2**n+1):
 		for j in range(0, 2**n+1-i):
 			points.append(pt1 + (i/2.**n)*vectorU + (j/2.**n)*vectorV)
-	print(unitNorVec)
-	#print(points)
+	#print(unitNorVec)
+	print(points)
 	#print(len(points))
 
 	return (points, unitNorVec)
@@ -65,9 +65,9 @@ def plotP_V(points, unitNorVec):
 
 	plt.show()
 
-pt1 = np.array([1,0,4])
-pt2 = np.array([0,2,0])
-pt3 = np.array([0,0,3])
+pt1 = np.array([0,0,1])
+pt2 = np.array([0,1,0])
+pt3 = np.array([1,0,0])
 
-points, unitNorVec = barycentric(pt1, pt2, pt3, 3)
+points, unitNorVec = barycentric(pt1, pt2, pt3, 1)
 plotP_V(points, unitNorVec)
