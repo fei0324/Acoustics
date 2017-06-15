@@ -28,12 +28,12 @@ def barycentric(pt1, pt2, pt3, n):
 		for j in range(0, 2**n+1-i):
 			points.append(pt1 + (i/2.**n)*vectorU + (j/2.**n)*vectorV)
 	#print(unitNorVec)
-	print(points)
+	#print(points)
 	#print(len(points))
 
 	return (points, unitNorVec)
 
-def plotP_V(points, unitNorVec):
+def plotP_V(points, unitNorVec, ax):
 
 	"""
 	Plot all the subdivision points and the unit normal vectors
@@ -42,9 +42,6 @@ def plotP_V(points, unitNorVec):
 
 	Output: A 3d plot of points and vectors
 	"""
-
-	fig = plt.figure()
-	ax = fig.gca(projection='3d')
 
 	xs = []
 	ys = []
@@ -61,13 +58,15 @@ def plotP_V(points, unitNorVec):
 
 	ax.plot(xs, ys, zs, 'o')
 	ax.quiver(xs, ys, zs, u, v, w, length=0.2, normalize=True)
-	ax.legend()
 
-	plt.show()
+	
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+listOfPoints = [[np.array([0,0,1]),np.array([0,1,0]),np.array([1,0,0])],[np.array([2,3,4]),np.array([2,5,3]),np.array([1,2,2])]]
+plt.hold(True)
 
-pt1 = np.array([0,0,1])
-pt2 = np.array([0,1,0])
-pt3 = np.array([1,0,0])
+for i in range(len(listOfPoints)):
+	points, unitNorVec = barycentric(listOfPoints[i][0], listOfPoints[i][1], listOfPoints[i][2], 2)
+	plotP_V(points, unitNorVec, ax)
 
-points, unitNorVec = barycentric(pt1, pt2, pt3, 1)
-plotP_V(points, unitNorVec)
+plt.show()
