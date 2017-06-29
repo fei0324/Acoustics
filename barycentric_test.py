@@ -11,10 +11,18 @@ class BarycentricTestCase(unittest.TestCase):
 		self.pt3 = np.array([1,0,0])
 		self.n = 4
 
+	def test_type(self):
+		points, unitNorVec = BarycentricSubdivision.barycentric(self.pt1, self.pt2, self.pt3, 1)
+		print("Testing type of 'points'.")
+		self.assertTrue(type(points) == list, msg="Type of 'points' is incorrect.")
+		print("Testing type of unit normal vector.")
+		self.assertTrue(type(unitNorVec) == np.ndarray, msg="Type of unit normal vector is incorrect.")
+
+
 	def test_sizeOfPoints(self):
-		"""test for correct subdivisions and normal vector"""
 
 		for i in range(self.n):
+
 			points, unitNorVec = BarycentricSubdivision.barycentric(self.pt1, self.pt2, self.pt3, i)
 			numbOfPts = sum(range(2**i+2))
 
@@ -23,6 +31,7 @@ class BarycentricTestCase(unittest.TestCase):
 			self.assertEqual(len(points), numbOfPts, msg="Incorrect number of subdivision points")
 
 	def test_unitNorVec(self):
+
 		points, unitNorVec = BarycentricSubdivision.barycentric(self.pt1, self.pt2, self.pt3, 1)
 		#verify normal vector
 		print("Testing unit normal vectors.")

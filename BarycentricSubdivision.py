@@ -57,7 +57,7 @@ def plotP_V(points, unitNorVec, ax):
 		zs.append(points[i][2])
 
 	ax.plot(xs, ys, zs, 'o')
-	ax.quiver(xs, ys, zs, u, v, w, length=0.2, normalize=True)
+	#ax.quiver(xs, ys, zs, u, v, w, length=0.2, normalize=True)
 
 	
 fig = plt.figure()
