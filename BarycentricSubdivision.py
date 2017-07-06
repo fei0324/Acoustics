@@ -2,6 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from stl import mesh
 
 def barycentric(pt1, pt2, pt3, n):
 
@@ -59,14 +60,23 @@ def plotP_V(points, unitNorVec, ax):
 	ax.plot(xs, ys, zs, 'o')
 	#ax.quiver(xs, ys, zs, u, v, w, length=0.2, normalize=True)
 
-	
-fig = plt.figure()
-ax = fig.gca(projection='3d')
-listOfPoints = [[np.array([0,0,1]),np.array([0,1,0]),np.array([1,0,0])],[np.array([2,3,4]),np.array([2,5,3]),np.array([1,2,2])]]
+fig = plt.figure(figsize=plt.figaspect(0.5))
+fig.suptitle("Test for Subdivision", fontsize = 18)
+ax1 = fig.add_subplot(1,2,1,projection='3d')
+ax1.set_title("Sphere STL Subdivision")
+ax2 = fig.add_subplot(1,2,2,projection='3d')
+ax2.set_title("Cylinder STL Subdivision")
+
+sphere_mesh = mesh.Mesh.from_file('sphere.stl')
+cylinder_mesh = mesh.Mesh.from_file('cylinder.stl')
 plt.hold(True)
 
-for i in range(len(listOfPoints)):
-	points, unitNorVec = barycentric(listOfPoints[i][0], listOfPoints[i][1], listOfPoints[i][2], 2)
-	plotP_V(points, unitNorVec, ax)
+for i in range(len(sphere_mesh.vectors)):
+	points, unitNorVec = barycentric(sphere_mesh.vectors[i][0], sphere_mesh.vectors[i][1], sphere_mesh.vectors[i][2],3)
+	plotP_V(points, unitNorVec, ax1)
+
+for j in range(len(cylinder_mesh.vectors)):
+	points1, unitNorVec1 = barycentric(cylinder_mesh.vectors[j][0], cylinder_mesh.vectors[j][1], cylinder_mesh.vectors[j][2],4)
+	plotP_V(points1, unitNorVec1, ax2)
 
 plt.show()
