@@ -4,13 +4,13 @@ import numpy as np
 #import MagnitudeMatrixV2 as mx
 
 """ goal of progarm:  create a function to make the non diagonal terms of the eigne value matrix for frequency
-	inputs: pterms which is a (dimenstion x n )matrix of position vector inputs 
-	and the Mij matrix is a (n x n) matrix of constants incorperating the spring cconstant and their magnatudes
-	outputs: non diagonal terms of the eignevalue matrix of (n*dim x n*dim) 
+	inputs: pterms which is a (dimension x n) matrix of position vector inputs 
+	and the Mij matrix is a (n x n) matrix of constants incorperating the spring constant and their magnitudes
+	outputs: non diagonal terms of the eigenvalue matrix of (n*dim x n*dim) 
 """
 
 """
-the algorithum may be optimizible by rewriting some of the for loops with modular arithmatic
+the algorithm may be optimizible by rewriting some of the for loops with modular arithmatic
 has not been checked for correctness yet 
 """
 
@@ -41,12 +41,26 @@ def Imatrix(pterms, Mij):
 
 	return Imat
 
+def otherTermMat(positions, Mij):
+
+	OTMat = np.zeros((3*len(Mij),3*len(Mij)))
+
+	# i, j for Mij index, a, b for OTMat index
+	for a in range(3*len(Mij)):
+		for b in range(3*len(Mij)):
+			i = a/3
+			j = b/3
+			OTMat[a,b] = (-1)*Mij[i,j]*(positions[i,a%3]-positions[j,a%3])*(positions[i,b%3]-positions[j,b%3])
+	return OTMat
+
 # test data
 pterms = np.matrix([[10,0,0],[0,5,-10],[-7.5,-10,0]])
 Mij = np.matrix([[0,5,11],[-5,0,3],[-11,-3,0]])
 
 
 print Imatrix(pterms, Mij)
+print("New one!!!")
+print otherTermMat(pterms, Mij)
    
 
 
