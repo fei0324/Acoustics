@@ -32,7 +32,32 @@ def barycentric(pt1, pt2, pt3, n):
 	#print(points)
 	#print(len(points))
 
-	return (points, unitNorVec)
+	triangleSet = []
+	x = 0
+	y = 2**n
+
+	for i in range(2**n+1, 1, -1):
+		for j in range(x,y):
+
+			tri = []
+			tri.append(points[j])
+			tri.append(points[j+1])
+			tri.append(points[j+i])
+			triangleSet.append(tri)
+
+		x = x+i
+		y = y+i-1
+
+		for k in range(x,y):
+
+			tri = []
+			tri.append(points[k])
+			tri.append(points[k+1])
+			tri.append(points[k+1-i])
+			triangleSet.append(tri)
+
+
+	return (points, triangleSet, unitNorVec)
 
 def plotP_V(points, unitNorVec, ax):
 
@@ -72,11 +97,15 @@ cylinder_mesh = mesh.Mesh.from_file('cylinder.stl')
 plt.hold(True)
 
 for i in range(len(sphere_mesh.vectors)):
-	points, unitNorVec = barycentric(sphere_mesh.vectors[i][0], sphere_mesh.vectors[i][1], sphere_mesh.vectors[i][2],3)
+	points, triangleSet, unitNorVec = barycentric(sphere_mesh.vectors[i][0], sphere_mesh.vectors[i][1], sphere_mesh.vectors[i][2],3)
 	plotP_V(points, unitNorVec, ax1)
 
 for j in range(len(cylinder_mesh.vectors)):
-	points1, unitNorVec1 = barycentric(cylinder_mesh.vectors[j][0], cylinder_mesh.vectors[j][1], cylinder_mesh.vectors[j][2],4)
+	points1, triangleSet1, unitNorVec1 = barycentric(cylinder_mesh.vectors[j][0], cylinder_mesh.vectors[j][1], cylinder_mesh.vectors[j][2],4)
 	plotP_V(points1, unitNorVec1, ax2)
 
 plt.show()
+print(len(points))
+print(len(triangleSet))
+print(len(points1))
+print(len(triangleSet1))

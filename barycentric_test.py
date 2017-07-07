@@ -2,7 +2,7 @@ import unittest
 import numpy as np
 import math
 
-import BarycentricSubdivision
+import subdivision
 
 class BarycentricTestCase(unittest.TestCase):
 	def setUp(self):
@@ -12,7 +12,7 @@ class BarycentricTestCase(unittest.TestCase):
 		self.n = 4
 
 	def test_type(self):
-		points, unitNorVec = BarycentricSubdivision.barycentric(self.pt1, self.pt2, self.pt3, 1)
+		points, triangleSet, unitNorVec = subdivision.barycentric(self.pt1, self.pt2, self.pt3, 1)
 		print("Testing type of 'points'.")
 		self.assertTrue(type(points) == list, msg="Type of 'points' is incorrect.")
 		print("Testing type of unit normal vector.")
@@ -23,7 +23,7 @@ class BarycentricTestCase(unittest.TestCase):
 
 		for i in range(self.n):
 
-			points, unitNorVec = BarycentricSubdivision.barycentric(self.pt1, self.pt2, self.pt3, i)
+			points, triangleSet, unitNorVec = subdivision.barycentric(self.pt1, self.pt2, self.pt3, i)
 			numbOfPts = sum(range(2**i+2))
 
 			print("Testing the size of the point list with " + str(i) + " subdivisions.")
@@ -32,7 +32,7 @@ class BarycentricTestCase(unittest.TestCase):
 
 	def test_unitNorVec(self):
 
-		points, unitNorVec = BarycentricSubdivision.barycentric(self.pt1, self.pt2, self.pt3, 1)
+		points, triangleSet, unitNorVec = subdivision.barycentric(self.pt1, self.pt2, self.pt3, 1)
 		#verify normal vector
 		print("Testing unit normal vectors.")
 		self.assertTrue(abs(unitNorVec[0]-(-1/math.sqrt(3)))<1e-5, msg="Unit normal vector first component incorrect.")
