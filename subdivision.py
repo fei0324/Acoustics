@@ -59,6 +59,26 @@ def barycentric(pt1, pt2, pt3, n):
 
 	return (points, triangleSet, unitNorVec)
 
+def triangleArea(triangleSet):
+
+	"""
+	Calculate areas of subdivided triangles
+
+	Input: the set of subdivided triangles
+
+	Output: a list of the areas with corresponding idices with the the triangleSet
+	"""
+
+	triangleAreaSet = []
+
+	for i in range(len(triangleSet)):
+		v1 = triangleSet[i][1] - triangleSet[i][0]
+		v2 = triangleSet[i][2] - triangleSet[i][0]
+		area = np.cross(v1, v2)/2
+		triangleAreaSet.append(area)
+
+	return triangleAreaSet
+
 def plotP_V(points, unitNorVec, ax):
 
 	"""
@@ -98,14 +118,18 @@ plt.hold(True)
 
 for i in range(len(sphere_mesh.vectors)):
 	points, triangleSet, unitNorVec = barycentric(sphere_mesh.vectors[i][0], sphere_mesh.vectors[i][1], sphere_mesh.vectors[i][2],3)
+	triangleAreaSet = triangleArea(triangleSet)
 	plotP_V(points, unitNorVec, ax1)
 
 for j in range(len(cylinder_mesh.vectors)):
 	points1, triangleSet1, unitNorVec1 = barycentric(cylinder_mesh.vectors[j][0], cylinder_mesh.vectors[j][1], cylinder_mesh.vectors[j][2],4)
+	triangleAreaSet1 = triangleArea(triangleSet1)
 	plotP_V(points1, unitNorVec1, ax2)
 
 plt.show()
-print(len(points))
-print(len(triangleSet))
-print(len(points1))
-print(len(triangleSet1))
+print("Sphere points = " + str(len(points)))
+print("Sphere triangles = " + str(len(triangleSet)))
+print("Sphere triangle areas = " + str(len(triangleAreaSet)))
+print("Cylinder points = " + str(len(points1)))
+print("Cylinder triangles = " + str(len(triangleSet1)))
+print("Cylinder triangle areas = " + str(len(triangleAreaSet1)))
