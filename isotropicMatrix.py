@@ -15,21 +15,18 @@ def isotropicMatrix(wavelength, sourcePoints, samplePoints):
 	"""
 
 	# Wavenumber
-	k = 2*pi/wavelength
+	k = 2*math.pi/wavelength
 
-	distance = np.zeros(len(samplePoints),len(sourcePoints))
-	# Currently based on the questionable indices order: x.shape = (depth, row, column)
-	# i for row, j for column, k for depth
-	for i in range(1, len(samplePoints.shape[1])):
-		for j in range(1, len(sourcePoints.shape[2])):
-			for k in range(1, len(samplePoints.shape[0])):
+	distance = np.zeros((len(samplePoints),len(sourcePoints)))
+	isoMat = np.zeros((len(samplePoints), len(sourcePoints)), dtype=complex)
 
-				distance += (samplePoints[k][i][0] - sourcePoints[k][0][j])**2
-				#skeptical...
+	# i for row, j for column
+	for i in range(0, len(samplePoints)):
+		for j in range(0, len(sourcePoints)):
+			distance[i,j] = np.linalg.norm(sourcePoints[j], samplePoints[i])
+			isoMat[i,j] = np.exp(1j*k*distance[i,j])/(4*math.pi*distance[i,j])
+	print isoMat
 
+	return isoMat
 
-	distance = math.sqrt(distance)
-
-	mat = math.e**(1j*k*distance)/(4*math.pi*distance)
-
-	return mat
+isotropicMatrix(1, np.array([[10,20,30], [1,2,4], [6,3,6]]), np.array([10,2,4]))
