@@ -27,7 +27,7 @@ def Imatrix(pterms, Mij):
 	n = len(pterms)
 	col = len(pterms[0])
 	nn = n*col 	  
-	Imat = np.zeros((nn,nn)) 
+	Imat = np.zeros((nn,nn),dtype=complex) 
 
 	for i in range(0,nn):
 		if i % col == 0:	
@@ -44,7 +44,7 @@ def Imatrix(pterms, Mij):
 
 def otherTermMat(positions, Mij):
 
-	OTMat = np.zeros((3*len(Mij),3*len(Mij)))
+	OTMat = np.zeros((3*len(Mij),3*len(Mij)),dtype=complex)
 
 	# i, j for Mij index, a, b for OTMat index
 	for a in range(3*len(Mij)):

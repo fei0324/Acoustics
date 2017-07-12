@@ -12,7 +12,7 @@ def Dmat(pterms,Mij):
 	#n is the number of masses
 	#dim is the number of terms in the vectors
 	nn = dim*n
-	Dmat = np.zeros((nn,nn))
+	Dmat = np.zeros((nn,nn),dtype=complex)
 	for i in range(0,nn):
 		if i % dim == 0:
 				#k is what block we are in
