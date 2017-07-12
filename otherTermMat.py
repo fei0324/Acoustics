@@ -24,7 +24,8 @@ j = position in output matrix
 
 """
 def Imatrix(pterms, Mij):
-	n, col = pterms.shape
+	n = len(pterms)
+	col = len(pterms[0])
 	nn = n*col 	  
 	Imat = np.zeros((nn,nn)) 
 
@@ -37,7 +38,7 @@ def Imatrix(pterms, Mij):
 						g = b/col
 						for j in range(b,b+col): 
 
-							Imat[l,j] = (-1)*(Mij[k,g])*((pterms[k,(l-i)])-(pterms[g,(l-i)]))*((pterms[k,(j-b)])-(pterms[g,(j-b)]))
+							Imat[l,j] = (-1)*(Mij[k,g])*((pterms[k][(l-i)])-(pterms[g][(l-i)]))*((pterms[k][(j-b)])-(pterms[g][(j-b)]))
 
 	return Imat
 
@@ -50,17 +51,17 @@ def otherTermMat(positions, Mij):
 		for b in range(3*len(Mij)):
 			i = a/3
 			j = b/3
-			OTMat[a,b] = (-1)*Mij[i,j]*(positions[i,a%3]-positions[j,a%3])*(positions[i,b%3]-positions[j,b%3])
+			OTMat[a,b] = (-1)*Mij[i,j]*(positions[i][a%3]-positions[j][a%3])*(positions[i][b%3]-positions[j][b%3])
 	return OTMat
 
 # test data
-pterms = np.matrix([[10,0,0],[0,5,-10],[-7.5,-10,0]])
+positions = [np.array([10,0,0]),np.array([0,5,-10]),np.array([-7.5,-10,0])]
 Mij = np.matrix([[0,5,11],[-5,0,3],[-11,-3,0]])
 
 
-print Imatrix(pterms, Mij)
+print Imatrix(positions, Mij)
 print("New one!!!")
-print otherTermMat(pterms, Mij)
+print otherTermMat(positions, Mij)
    
 
 

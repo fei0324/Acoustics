@@ -60,3 +60,5 @@ print("Sphere triangle areas = " + str(len(triangleAreaSet)))
 print("Cylinder points = " + str(len(points1)))
 print("Cylinder triangles = " + str(len(triangleSet1)))
 print("Cylinder triangle areas = " + str(len(triangleAreaSet1)))
+
+def plotIsoMat()
