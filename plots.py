@@ -5,6 +5,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from stl import mesh
 
 import subdivision
+import isotropicMatrix
 
 def plotP_V(points, unitNorVec, ax):
 
@@ -61,4 +62,20 @@ print("Cylinder points = " + str(len(points1)))
 print("Cylinder triangles = " + str(len(triangleSet1)))
 print("Cylinder triangle areas = " + str(len(triangleAreaSet1)))
 
-def plotIsoMat()
+def plotIsoMat(isoMat):
+
+	matToArray = np.squeeze(np.asarray(isoMat))
+	imaginaryArray = matToArray*-1j
+
+	fig1 = plt.figure(2)
+	fig1.suptitle("Isotropic Matrix Graph", fontsize = 18)
+	plt.subplot(211)
+	plt.plot(points, matToArray, 'bo')
+	plt.subplot(212)
+	plt.plot(points, imaginaryArray, 'r--')
+
+	plt.show()
+
+points = np.linspace(1,50,50)
+isoMat = isotropicMatrix.isotropicMatrix(10, points, np.array([0]))
+plotIsoMat(isoMat)

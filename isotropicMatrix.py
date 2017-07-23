@@ -25,7 +25,7 @@ def isotropicMatrix(wavelength, sourcePoints, samplePoints):
 		for j in range(0, len(sourcePoints)):
 			distance[i,j] = np.linalg.norm(sourcePoints[j]-samplePoints[i])
 			isoMat[i,j] = np.exp(-1j*k*distance[i,j])/(4*math.pi*distance[i,j])
-	print isoMat
+	#print isoMat
 
 	return isoMat
 

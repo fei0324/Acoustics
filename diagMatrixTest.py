@@ -1,16 +1,15 @@
 import numpy as np
 import unittest
 import math 
-import Dmatrixfunctionv2 as Dmat
-
-	"""unit test for the D matrix code 
-		should contain tests for symetry specific values and dementions
-	"""
+import diagMatrix as Dmat
 
 
 class DMatrixFunctionTestCase(unittest.TestCase):
 
-
+	"""unit test for the D matrix code 
+		should contain tests for symetry specific values and dementions
+	"""
+	
 	def setUp(self):
 		self.pterms1 = [np.array([0,0,0]),np.array([5,5,5]),np.array([10,0,-10]),np.array([-5,-30,2])]
 		self.Mij1 = np.matrix([[0,2,3,4],[5,0,7,8],[9,10,0,12],[13,14,15,0]])
