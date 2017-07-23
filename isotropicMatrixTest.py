@@ -21,8 +21,8 @@ class isoMatrixFunctionTestCase(unittest.TestCase):
 		M = isoMat.isotropicMatrix(1,self.source1,self.sample1)
 		print("testing colums")
 		for i in range(0,len(M)):
-				if i < len(M)-1:
-					self.assertEqual(M[i][0], M[i+1][0], msg="colum test failed.")
+			if i < len(M)-1:
+				self.assertEqual(M[i][0], M[i+1][0], msg="colum test failed.")
 
 	# test for row values
 	def test_row(self):
@@ -37,7 +37,7 @@ class isoMatrixFunctionTestCase(unittest.TestCase):
 		h = (math.cos(2*math.pi*math.sqrt(2)))/(4*math.pi*math.sqrt(2))
 		l = (math.sin(2*math.pi*math.sqrt(2)))/(4*math.pi*math.sqrt(2))*(-1) 
 		print("testing specific values")
-		self.assertEqual(M[2][0], complex(h,l), msg="specific test failed")
+		self.assertTrue(abs(M[2][0]-complex(h,l))<(1e-5+1e-5j), msg="specific test failed")
 
 if __name__ == '__main__':
 	unittest.main()
