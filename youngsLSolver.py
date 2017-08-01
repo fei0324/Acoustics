@@ -15,13 +15,15 @@ def rotationMat(n):
 	sinAngle = np.sin(np.arccos(cosAngle))
 
 	u = np.array([n[1],-1*n[0],0])/np.linalg.norm(n)
-	#print("u = " + str(u))
+	print("u = " + str(u))
 	rotMat = np.zeros((3,3))
 	rotMat[0] = [cosAngle+u[0]**2*(1-cosAngle),u[0]*u[1]*(1-cosAngle),u[1]*sinAngle]
 	rotMat[1] = [u[0]*u[1]*(1-cosAngle),cosAngle+u[1]**2*(1-cosAngle),-1*u[0]*sinAngle]
 	rotMat[2] = [-1*u[1]*sinAngle,u[0]*sinAngle,cosAngle]
 
-	#print(rotMat)
+	print(np.linalg.det(rotMat))
+	print(rotMat)
+	print(np.dot(rotMat,[2,3,4]))
 	#print(np.dot(rotMat,[1,0,2]))
 	#print(np.dot(rotMat,[5,0,-9]))
 
@@ -98,4 +100,5 @@ forceVecs = np.zeros((len(triangles),3))
 forceVecs[15] = [2,3,4]
 
 #rotationMat([0,1,0])
-print(LSolver(triangles, triNormVecs, forceVecs))
+rotationMat([2,3,4])
+#print(LSolver(triangles, triNormVecs, forceVecs))
