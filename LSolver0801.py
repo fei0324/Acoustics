@@ -19,6 +19,7 @@ def LSolver(triangles,triNormVecs,forceVecs):
 	v = np.zeros((len(triangles),3))
 	centroid = np.zeros((len(triangles),3))
 	Lmat = np.zeros((len(triangles),len(triangles)))
+	Llist = np.zeros(len(triangles))
 	#Xmat = np.zeros((len(triangles),len(triangles)))
 
 	# Vector u, vector v and force vector starting point (approximating with the centroid of triangles)
@@ -54,17 +55,36 @@ def LSolver(triangles,triNormVecs,forceVecs):
 					Lmat[i,j] = l
 				else:
 					Lmat[i,j] = -20
+
+	for i in range(len(triangles)):
+		Llist[i] = max(Lmat[i])
 	#print(Xmat)
-	print(Lmat[0])
+	print(len(Lmat))
+	print(len(Llist))
+	print(Llist)
+	#print(Lmat)
+	#print(Lmat[0])
+	#print(Lmat[2])
+	#print(Lmat[3])
+	#print(Lmat[4])
+	#print(Lmat[5])
+	#print(Lmat[25])
+	#print(Lmat[90])
 
-	return Lmat
+	return Lmat, Llist
 
+"""
 triangles = np.array([[[0,0,0],[3,0,0],[0,3,0]],[[0,0,4],[3,0,4],[0,3,4]]])
 triNormVecs = np.array([[0,0,1],[0,0,1]])
-forceVecs = np.array([[0,0,3],[0,0,-3]])
+forceVecs1 = np.array([[0,0,3],[0,0,-3]])
+forceVecs2 = np.array([[1,1,0],[1,1,0]])
+forceVecs3 = np.array([[0,5,5],[0,5,5]])
 
-LSolver(triangles,triNormVecs,forceVecs)
+LSolver(triangles,triNormVecs,forceVecs1)
+LSolver(triangles,triNormVecs,forceVecs2)
+LSolver(triangles,triNormVecs,forceVecs3)
 """
+
 sphere_mesh = mesh.Mesh.from_file('sphere.stl')
 triNormVecs = sphere_mesh.normals
 triangles = sphere_mesh.vectors
@@ -75,4 +95,17 @@ for i in range(len(forceVecs)):
 
 print("number of triangles = " + str(len(triangles)))
 LSolver(triangles, triNormVecs, forceVecs)
+
 """
+cylinder_mesh = mesh.Mesh.from_file('cylinder.stl')
+triNormVecs = cylinder_mesh.normals
+triangles = cylinder_mesh.vectors
+#print("triangles = " + str(triangles))
+forceVecs = np.zeros((len(triangles),3))
+for i in range(len(forceVecs)):
+	forceVecs[i] = -1*triNormVecs[i]*30
+
+print("number of triangles = " + str(len(triangles)))
+LSolver(triangles, triNormVecs, forceVecs)
+"""
+

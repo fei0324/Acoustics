@@ -56,23 +56,3 @@ def barycentric(pt1, pt2, pt3, n):
 
 
 	return (points, triangleSet, unitNorVec)
-
-def triangleArea(triangleSet):
-
-	"""
-	Calculate areas of subdivided triangles
-
-	Input: the set of subdivided triangles
-
-	Output: a list of the areas with corresponding idices with the the triangleSet
-	"""
-
-	triangleAreaSet = []
-
-	for i in range(len(triangleSet)):
-		v1 = triangleSet[i][1] - triangleSet[i][0]
-		v2 = triangleSet[i][2] - triangleSet[i][0]
-		area = np.linalg.norm(np.cross(v1, v2))/2
-		triangleAreaSet.append(area)
-
-	return triangleAreaSet
