@@ -15,74 +15,97 @@ def LSolver(triangles,triNormVecs,forceVecs):
 	Output: The length of L for Young's Modulus
 	"""
 
-	L = []
+	u = np.zeros((len(triangles),3))
+	v = np.zeros((len(triangles),3))
+	centroid = np.zeros((len(triangles),3))
+	Lmat = np.zeros((len(triangles),len(triangles)))
+	Llist = np.zeros(len(triangles))
+	#Xmat = np.zeros((len(triangles),len(triangles)))
 
-	# Force vector starting point (approximating with the centroid of the triangle)
-	for triangle in triangles:
-		p.append(triangle[0])
+	# Vector u, vector v and force vector starting point (approximating with the centroid of triangles)
+	for i in range(len(triangles)):
+		u[i] = triangles[i][1] - triangles[i][0]
+		v[i] = triangles[i][2] - triangles[i][0]
+		centroid[i] = triangles[i][0] + (1/3)*u[i] + (1/3)*v[i]
 
-	# Check if the force vector is parallel to the normal vector of a triangle
 	for i in range(len(forceVecs)):
 		for j in range(len(triNormVecs)):
-			if np.dot(forceVecs[i], triNormVecs[j]) != 0.:
+			if abs(np.dot(forceVecs[i], triNormVecs[j])-0.)<1e-05:
+				Lmat[i,j] = -10
+				#Xmat[i,j] = -10
+			else:
 
-				# Find intersection point on each plane
-				numer = np.dot(triNormVecs[j],(p[j]-p[i]))
+				# Find intersection point on the plane
+				numer = np.dot(triNormVecs[j],triangles[j][0]-centroid[i])
 				denom = np.dot(triNormVecs[j],forceVecs[i])
 				t = numer/denom
-				intersectPoint = p[i] + t*forceVecs[i]
+				intersectPoint = centroid[i] + t*forceVecs[i]
 
-				# Verify if the point is inside of the triangle
+				# Verify if the point is in the triangle
+				q = intersectPoint - triangles[j][0]
 
-				e1 = triangles[j][1] - triangles[j][0]
-				e2 = triangles[j][2] - triangles[j][0]
-				v = intersectPoint - triangles[j][0]
+				a = np.transpose(np.array([u[j],v[j]]))
 
-				a = np.transpose(np.array([e1,e2]))
+				#x = np.linalg.solve(a,q)
+				x = np.linalg.lstsq(a,q)[0]
+				#Xmat[i,j] = x
 
-				x = np.linalg.lstsq(a,v)[0]
+				if 0<=x[0]<=1 and 0<=x[1]<=1 and 0<=x[0]+x[1]<=1:
+					l = np.linalg.norm(intersectPoint - centroid[i])
+					Lmat[i,j] = l
+				else:
+					Lmat[i,j] = -20
 
-				if i == 80:
-					print("force = " + str(forceVecs[i]))
-					print("j = " + str(j))
-					print(x)
-					print("t = " + str(t))
+	for i in range(len(triangles)):
+		Llist[i] = max(Lmat[i])
+	#print(Xmat)
+	print(len(Lmat))
+	print(len(Llist))
+	print(Llist)
+	#print(Lmat)
+	#print(Lmat[0])
+	#print(Lmat[2])
+	#print(Lmat[3])
+	#print(Lmat[4])
+	#print(Lmat[5])
+	#print(Lmat[25])
+	#print(Lmat[90])
 
-				if 0 <= x[0] <= 1 and 0 <= x[1] <= 1 and 0 <= x[0]+x[1] <= 1:
-					l = np.linalg.norm(t*forceVecs[i])
+	return Lmat, Llist
 
-					#if i == 80:
-					#	print("force = " + str(forceVecs[i]))
-					#	print("j = " + str(j))
-					#	print(x)
-					#	print("t = " + str(t))
-					if abs(l-0.)>1e-10:
+"""
+triangles = np.array([[[0,0,0],[3,0,0],[0,3,0]],[[0,0,4],[3,0,4],[0,3,4]]])
+triNormVecs = np.array([[0,0,1],[0,0,1]])
+forceVecs1 = np.array([[0,0,3],[0,0,-3]])
+forceVecs2 = np.array([[1,1,0],[1,1,0]])
+forceVecs3 = np.array([[0,5,5],[0,5,5]])
 
-						#print("i = " + str(i))
-						#print("j = " + str(j))
-						#print("t = " + str(t))
-						#print("numer = " + str(numer))
-						#print("p[i] = " + str(p[i]) + " p[j] = " + str(p[j]))
-						#print("denom = " + str(denom))
-						L.append(l)
-						break
-	print(len(L))
-						
-						
-	return L
+LSolver(triangles,triNormVecs,forceVecs1)
+LSolver(triangles,triNormVecs,forceVecs2)
+LSolver(triangles,triNormVecs,forceVecs3)
+"""
 
+sphere_mesh = mesh.Mesh.from_file('sphere.stl')
+triNormVecs = sphere_mesh.normals
+triangles = sphere_mesh.vectors
+#print("triangles = " + str(triangles))
+forceVecs = np.zeros((len(triangles),3))
+for i in range(len(forceVecs)):
+	forceVecs[i] = -1*triNormVecs[i]*3
 
-# read an stl file
+print("number of triangles = " + str(len(triangles)))
+LSolver(triangles, triNormVecs, forceVecs)
+
+"""
 cylinder_mesh = mesh.Mesh.from_file('cylinder.stl')
 triNormVecs = cylinder_mesh.normals
 triangles = cylinder_mesh.vectors
-print("triangles = " + str(triangles))
+#print("triangles = " + str(triangles))
 forceVecs = np.zeros((len(triangles),3))
 for i in range(len(forceVecs)):
-	forceVecs[i] = -1*triNormVecs[i]*35
+	forceVecs[i] = -1*triNormVecs[i]*30
 
-#rotationMat([0,1,0])
-#rotationMat([2,3,4])
-#print("force = " + str(forceVecs))
 print("number of triangles = " + str(len(triangles)))
-print(LSolver(triangles, triNormVecs, forceVecs))
+LSolver(triangles, triNormVecs, forceVecs)
+"""
+

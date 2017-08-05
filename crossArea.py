@@ -1,5 +1,6 @@
 import math
 import numpy as np
+from stl import mesh
 
 from subdivision import *
 
@@ -39,6 +40,16 @@ def crossArea(forceVecs,triangleAreaSet,triNormVecs):
 
 	for i in range(len(forceVecs)):
 		costheta = np.dot(forceVecs[i],triNormVecs[i])/(np.linalg.norm(forceVecs[i])*np.linalg.norm(triNormVecs[i]))
-		crossAreaSet[i] = costheta*triangleAreaSet[i]
+		crossAreaSet[i] = abs(costheta*triangleAreaSet[i])
 
 	return crossAreaSet
+
+sphere_mesh = mesh.Mesh.from_file('sphere.stl')
+triNormVecs = sphere_mesh.normals
+triangles = sphere_mesh.vectors
+#print("triangles = " + str(triangles))
+forceVecs = np.zeros((len(triangles),3))
+forceVecs[14] = np.array([2,3,1])
+triangleAreaSet = triangleArea(triangles)
+print(triangleAreaSet)
+print(crossArea(forceVecs,triangleAreaSet,triNormVecs))
