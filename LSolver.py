@@ -2,7 +2,7 @@ import math
 import numpy as np
 from stl import mesh
 
-def LSolver(triangles,triNormVecs,forceVecs):
+def lengthSolver(triangles,triNormVecs,forceVecs):
 
 	"""
 	Preparation for Young's Modulus:
@@ -33,8 +33,8 @@ def LSolver(triangles,triNormVecs,forceVecs):
 			if abs(np.dot(forceVecs[i], triNormVecs[j])-0.)<1e-05:
 				Lmat[i,j] = -10
 				#Xmat[i,j] = -10
+			
 			else:
-
 				# Find intersection point on the plane
 				numer = np.dot(triNormVecs[j],triangles[j][0]-centroid[i])
 				denom = np.dot(triNormVecs[j],forceVecs[i])
@@ -59,9 +59,9 @@ def LSolver(triangles,triNormVecs,forceVecs):
 	for i in range(len(triangles)):
 		Llist[i] = max(Lmat[i])
 	#print(Xmat)
-	print(len(Lmat))
-	print(len(Llist))
-	print(Llist)
+	#print(len(Lmat))
+	#print(len(Llist))
+	#print(Llist)
 	#print(Lmat)
 	#print(Lmat[0])
 	#print(Lmat[2])
@@ -71,7 +71,7 @@ def LSolver(triangles,triNormVecs,forceVecs):
 	#print(Lmat[25])
 	#print(Lmat[90])
 
-	return Lmat, Llist
+	return Llist
 
 """
 triangles = np.array([[[0,0,0],[3,0,0],[0,3,0]],[[0,0,4],[3,0,4],[0,3,4]]])
@@ -84,7 +84,7 @@ LSolver(triangles,triNormVecs,forceVecs1)
 LSolver(triangles,triNormVecs,forceVecs2)
 LSolver(triangles,triNormVecs,forceVecs3)
 """
-
+"""
 sphere_mesh = mesh.Mesh.from_file('sphere.stl')
 triNormVecs = sphere_mesh.normals
 triangles = sphere_mesh.vectors
@@ -95,6 +95,7 @@ for i in range(len(forceVecs)):
 
 print("number of triangles = " + str(len(triangles)))
 LSolver(triangles, triNormVecs, forceVecs)
+"""
 
 """
 cylinder_mesh = mesh.Mesh.from_file('cylinder.stl')

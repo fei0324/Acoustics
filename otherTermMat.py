@@ -54,6 +54,7 @@ def otherTermMat(positions, Mij):
 			OTMat[a,b] = (-1)*Mij[i,j]*(positions[i][a%3]-positions[j][a%3])*(positions[i][b%3]-positions[j][b%3])
 	return OTMat
 
+"""
 # test data
 positions = [np.array([10,0,0]),np.array([0,5,-10]),np.array([-7.5,-10,0])]
 Mij = np.matrix([[0,5,11],[-5,0,3],[-11,-3,0]])
@@ -62,6 +63,6 @@ Mij = np.matrix([[0,5,11],[-5,0,3],[-11,-3,0]])
 print Imatrix(positions, Mij)
 print("New one!!!")
 print otherTermMat(positions, Mij)
-   
+"""
 
 

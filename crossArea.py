@@ -44,6 +44,7 @@ def crossArea(forceVecs,triangleAreaSet,triNormVecs):
 
 	return crossAreaSet
 
+"""
 sphere_mesh = mesh.Mesh.from_file('sphere.stl')
 triNormVecs = sphere_mesh.normals
 triangles = sphere_mesh.vectors
@@ -53,3 +54,4 @@ forceVecs[14] = np.array([2,3,1])
 triangleAreaSet = triangleArea(triangles)
 print(triangleAreaSet)
 print(crossArea(forceVecs,triangleAreaSet,triNormVecs))
+"""

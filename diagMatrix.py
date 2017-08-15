@@ -34,7 +34,7 @@ def Dmat(pterms,Mij):
 original test data
 shows proper symetry in 3 by 3 blocks and zeros in the right places for 3 dementional vector inputs.
 term [0][1]for Dmat of test 1 should be 650 and is
-"""
+
 Ptermstest1 = [np.array([0,0,0]),np.array([5,5,5]),np.array([10,0,-10]),np.array([-5,-30,2])]
 Mijtest1 = np.matrix([[0,2,3,4],[5,0,7,8],[9,10,0,12],[13,14,15,0]])
 print Dmat(Ptermstest1,Mijtest1)
@@ -45,3 +45,4 @@ print Dmat(Ptermstest1,Mijtest1)
 Ptermstest2 = [np.array([0,0,0,0]),np.array([1,1,1,1]),np.array([-5,5,2,0]),np.array([6,7,8,-9])]
 Mijtest2 = np.matrix([[0,2,3,4],[5,0,7,8],[9,10,0,12],[13,14,15,0]])
 print Dmat(Ptermstest2,Mijtest2)
+"""
