@@ -2,17 +2,16 @@ import math
 import numpy as np
 from stl import mesh
 
-import subdivision
 import LSolver
 import crossArea
 
 
-def MijMat(elastic,L,triangleSet,positions):
+def MijMat(elastic,l,triangleSet,positions):
 
 	"""
 	Calculating Mij, a matrix of spring constants over length of strings
 	Input: elastic = elastic modulus/Young's modulus
-		   L = the length calculated by the L solver based on force
+		   l = the length calculated by the L solver based on force
 		   triangleSet = the entire set of triangles after necessary subdivision
 	Output: A matrix of spring constants for each string
 	"""
@@ -122,6 +121,7 @@ def pointsFromSTL(triangleSet):
 #positions = np.array([[1,2,3],[2,3,4],[3,4,5],[7,8,9],[1,5,6]])
 #triangleSet = np.array([[[1,2,3],[2,3,4],[7,8,9]],[[1,2,3],[2,3,4],[1,5,6]],[[3,4,5],[1,5,6],[7,8,9]]])
 
+"""
 sphere_mesh = mesh.Mesh.from_file('sphere.stl')
 triangleSet = sphere_mesh.vectors
 triNormVecs = sphere_mesh.normals
@@ -138,3 +138,4 @@ sameTriangle(0,1,positions,triangleSet)
 #sameTriangle(2,3,positions,triangleSet)
 #sameTriangle(17,30,positions,triangleSet)
 MijMat(10,l,triangleSet,positions)
+"""

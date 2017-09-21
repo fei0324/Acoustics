@@ -6,6 +6,7 @@ from stl import mesh
 
 import subdivision
 import isotropicMatrix
+import crossArea
 
 def plotP_V(points, unitNorVec, ax):
 
@@ -30,7 +31,7 @@ def plotP_V(points, unitNorVec, ax):
 		ys.append(points[i][1])
 		zs.append(points[i][2])
 
-	ax.plot(xs, ys, zs, 'o')
+	ax.plot(xs, ys, zs, '-o')
 	#ax.quiver(xs, ys, zs, u, v, w, length=0.2, normalize=True)
 
 fig = plt.figure(figsize=plt.figaspect(0.5))
@@ -45,13 +46,13 @@ cylinder_mesh = mesh.Mesh.from_file('cylinder.stl')
 plt.hold(True)
 
 for i in range(len(sphere_mesh.vectors)):
-	points, triangleSet, unitNorVec = subdivision.barycentric(sphere_mesh.vectors[i][0], sphere_mesh.vectors[i][1], sphere_mesh.vectors[i][2],3)
-	triangleAreaSet = subdivision.triangleArea(triangleSet)
+	points, triangleSet, unitNorVec = subdivision.barycentric(sphere_mesh.vectors[i][0], sphere_mesh.vectors[i][1], sphere_mesh.vectors[i][2],0)
+	triangleAreaSet = crossArea.triangleArea(triangleSet)
 	plotP_V(points, unitNorVec, ax1)
 
 for j in range(len(cylinder_mesh.vectors)):
-	points1, triangleSet1, unitNorVec1 = subdivision.barycentric(cylinder_mesh.vectors[j][0], cylinder_mesh.vectors[j][1], cylinder_mesh.vectors[j][2],4)
-	triangleAreaSet1 = subdivision.triangleArea(triangleSet1)
+	points1, triangleSet1, unitNorVec1 = subdivision.barycentric(cylinder_mesh.vectors[j][0], cylinder_mesh.vectors[j][1], cylinder_mesh.vectors[j][2],0)
+	triangleAreaSet1 = crossArea.triangleArea(triangleSet1)
 	plotP_V(points1, unitNorVec1, ax2)
 
 plt.show()

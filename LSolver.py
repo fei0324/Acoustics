@@ -1,6 +1,7 @@
 import math
 import numpy as np
 from stl import mesh
+import matplotlib.pyplot as plt
 
 def lengthSolver(triangles,triNormVecs,forceVecs):
 
@@ -30,6 +31,8 @@ def lengthSolver(triangles,triNormVecs,forceVecs):
 
 	for i in range(len(forceVecs)):
 		for j in range(len(triNormVecs)):
+
+			# If the force vector is parallel to the triangle plane, assign -10
 			if abs(np.dot(forceVecs[i], triNormVecs[j])-0.)<1e-05:
 				Lmat[i,j] = -10
 				#Xmat[i,j] = -10
@@ -50,9 +53,11 @@ def lengthSolver(triangles,triNormVecs,forceVecs):
 				x = np.linalg.lstsq(a,q)[0]
 				#Xmat[i,j] = x
 
-				if 0<=x[0]<=1 and 0<=x[1]<=1 and 0<=x[0]+x[1]<=1:
+				if -1e-05<=x[0]<=1+1e-05 and -1e-05<=x[1]<=1+1e-05 and -1e-05<=x[0]+x[1]<=1+1e-05:
 					l = np.linalg.norm(intersectPoint - centroid[i])
 					Lmat[i,j] = l
+
+				# If the intersection point if outside of the triangle, assign -20
 				else:
 					Lmat[i,j] = -20
 
@@ -60,8 +65,9 @@ def lengthSolver(triangles,triNormVecs,forceVecs):
 		Llist[i] = max(Lmat[i])
 	#print(Xmat)
 	#print(len(Lmat))
-	#print(len(Llist))
+	#print(len(Lmat[0]))
 	#print(Llist)
+	#print("L list = " + str(Llist))
 	#print(Lmat)
 	#print(Lmat[0])
 	#print(Lmat[2])
@@ -71,14 +77,17 @@ def lengthSolver(triangles,triNormVecs,forceVecs):
 	#print(Lmat[25])
 	#print(Lmat[90])
 
-	return Llist
+	return Llist, Lmat
 
 """
 triangles = np.array([[[0,0,0],[3,0,0],[0,3,0]],[[0,0,4],[3,0,4],[0,3,4]]])
 triNormVecs = np.array([[0,0,1],[0,0,1]])
-forceVecs1 = np.array([[0,0,3],[0,0,-3]])
-forceVecs2 = np.array([[1,1,0],[1,1,0]])
-forceVecs3 = np.array([[0,5,5],[0,5,5]])
+
+forceVecs = np.array([[0,0,3],[0,0,-3]])
+
+forceVecs = np.array([[1,1,0],[1,1,0]])
+
+forceVecs = np.array([[0,5,5],[0,5,5]])
 
 LSolver(triangles,triNormVecs,forceVecs1)
 LSolver(triangles,triNormVecs,forceVecs2)
@@ -94,10 +103,9 @@ for i in range(len(forceVecs)):
 	forceVecs[i] = -1*triNormVecs[i]*3
 
 print("number of triangles = " + str(len(triangles)))
-LSolver(triangles, triNormVecs, forceVecs)
+"""
 """
 
-"""
 cylinder_mesh = mesh.Mesh.from_file('cylinder.stl')
 triNormVecs = cylinder_mesh.normals
 triangles = cylinder_mesh.vectors
@@ -107,6 +115,18 @@ for i in range(len(forceVecs)):
 	forceVecs[i] = -1*triNormVecs[i]*30
 
 print("number of triangles = " + str(len(triangles)))
-LSolver(triangles, triNormVecs, forceVecs)
-"""
 
+
+Llist, Lmat = lengthSolver(triangles, triNormVecs, forceVecs)
+
+plt.figure(1)
+imageForL = np.random.rand(len(Lmat), len(Lmat[0]))
+plt.imshow(imageForL,cmap=plt.cm.cool)
+plt.colorbar()
+plt.title("L Matrix")
+
+plt.figure(2)
+plt.plot(Llist, 'ro')
+plt.title("L list")
+plt.show()
+"""
