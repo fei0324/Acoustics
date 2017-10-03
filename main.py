@@ -12,7 +12,7 @@ import otherTermMat
 import diagMatrix
 import Mij
 
-sphere_mesh = mesh.Mesh.from_file('sphere.stl')
+sphere_mesh = mesh.Mesh.from_file('sphere_5.stl')
 triangleSet = sphere_mesh.vectors
 triNormVecs = sphere_mesh.normals
 forceVecs = np.zeros((len(triangleSet),3))
