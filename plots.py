@@ -41,7 +41,7 @@ ax1.set_title("Sphere STL Subdivision")
 ax2 = fig.add_subplot(1,2,2,projection='3d')
 ax2.set_title("Cylinder STL Subdivision")
 
-sphere_mesh = mesh.Mesh.from_file('sphere.stl')
+sphere_mesh = mesh.Mesh.from_file('sphere_5.stl')
 cylinder_mesh = mesh.Mesh.from_file('cylinder.stl')
 plt.hold(True)
 

@@ -6,6 +6,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from matplotlib import cm
 
+import subdivision
 import LSolver
 import crossArea
 import otherTermMat
@@ -64,6 +65,7 @@ def plot(filename):
 	"""
 
 	file_mesh = mesh.Mesh.from_file(filename)
+
 	triangleSet = file_mesh.vectors
 	triNormVecs = file_mesh.normals
 	forceVecs = np.zeros((len(triangleSet),3))
@@ -107,8 +109,12 @@ def plot(filename):
 		ys.append(positions[i][1])
 		zs.append(positions[i][2])
 
+
+	plt.hold(True)
 	ax0.scatter(xs, ys, zs, c=listOfLength0, cmap=cm.cool)
+	ax0.plot(xs, ys, zs)
 	ax1.scatter(xs, ys, zs, c=listOfLength1, cmap=cm.cool)
+
 	ax2.scatter(xs, ys, zs, c=listOfLength2, cmap=cm.cool)
 	ax3.scatter(xs, ys, zs, c=listOfLength3, cmap=cm.cool)
 
