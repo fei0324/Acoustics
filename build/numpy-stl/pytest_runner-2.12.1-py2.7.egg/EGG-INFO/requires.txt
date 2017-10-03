@@ -1,0 +1,14 @@
+
+
+[docs]
+sphinx
+jaraco.packaging>=3.2
+rst.linker>=1.9
+
+[testing:python_version=="2.6"]
+importlib
+
+[testing]
+pytest>=2.8
+pytest-sugar
+pytest-virtualenv
