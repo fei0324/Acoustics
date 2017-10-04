@@ -116,6 +116,6 @@ def plot(filename):
 	ax3.scatter(xs, ys, zs, c=listOfLength3, cmap=cm.cool)
 
 	w, v = np.linalg.eig(BigMatrix)
-	print("eigenvalues = " + str(v))
+	print("eigenvalues = " + str(w))
 	
 	plt.show()
