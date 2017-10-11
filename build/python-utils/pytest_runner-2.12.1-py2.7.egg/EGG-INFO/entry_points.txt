@@ -1,0 +1,4 @@
+[distutils.commands]
+pytest = ptr:PyTest
+ptr = ptr:PyTest
+
