@@ -46,12 +46,12 @@ cylinder_mesh = mesh.Mesh.from_file('cylinder.stl')
 plt.hold(True)
 
 for i in range(len(sphere_mesh.vectors)):
-	points, triangleSet, unitNorVec = subdivision.barycentric(sphere_mesh.vectors[i][0], sphere_mesh.vectors[i][1], sphere_mesh.vectors[i][2],0)
+	points, triangleSet, unitNorVec = subdivision.barycentric(sphere_mesh.vectors[i][0], sphere_mesh.vectors[i][1], sphere_mesh.vectors[i][2],1)
 	triangleAreaSet = crossArea.triangleArea(triangleSet)
 	plotP_V(points, unitNorVec, ax1)
 
 for j in range(len(cylinder_mesh.vectors)):
-	points1, triangleSet1, unitNorVec1 = subdivision.barycentric(cylinder_mesh.vectors[j][0], cylinder_mesh.vectors[j][1], cylinder_mesh.vectors[j][2],0)
+	points1, triangleSet1, unitNorVec1 = subdivision.barycentric(cylinder_mesh.vectors[j][0], cylinder_mesh.vectors[j][1], cylinder_mesh.vectors[j][2],1)
 	triangleAreaSet1 = crossArea.triangleArea(triangleSet1)
 	plotP_V(points1, unitNorVec1, ax2)
 

@@ -2,6 +2,8 @@ import math
 import numpy as np
 
 
+from stl import mesh
+
 def barycentric(pt1, pt2, pt3, n):
 
 	"""
@@ -54,5 +56,38 @@ def barycentric(pt1, pt2, pt3, n):
 			tri.append(points[k+1-i])
 			triangleSet.append(tri)
 
+	norVecSet = []
 
-	return (points, triangleSet, unitNorVec)
+	for i in range(len(triangleSet)):
+		norVecSet.append(unitNorVec)
+
+
+	return points, triangleSet, norVecSet
+
+"""
+points, triangleSet, norVecSet = barycentric(np.array([1,1,1]),np.array([2,2,2]),np.array([3,4,2]),1)
+print(len(triangleSet))
+print(len(norVecSet))
+print(triangleSet)
+print(norVecSet)
+"""
+
+
+"""
+sphere_mesh = mesh.Mesh.from_file('sphere_5.stl')
+
+totalTriangleSet = []
+totalNorVecSet = []
+for i in range(len(sphere_mesh.vectors)):
+	points, triangleSet, norVecSet = barycentric(sphere_mesh.vectors[i][0], sphere_mesh.vectors[i][1], sphere_mesh.vectors[i][2],1)
+	print(len(triangleSet))
+	print(len(norVecSet))
+
+	for j in range(len(triangleSet)):
+		totalTriangleSet.append(triangleSet[j])
+		totalNorVecSet.append(norVecSet[j])
+
+print(len(sphere_mesh.vectors))
+print(len(totalTriangleSet))
+print(len(totalNorVecSet))
+"""

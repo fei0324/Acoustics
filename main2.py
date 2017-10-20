@@ -58,18 +58,33 @@ def plotEigenVectorLength(BigMatrix, indexW, positions):
 
 	return listOfLength
 
-def plot(filename):
+def plot(filename,n):
 
 	"""
-	Input = filename needs to be in '.stl' format ex. filename = 'sphere.stl'
+	Input: filename needs to be in '.stl' format ex. filename = 'sphere.stl'
+		   n = the number of the times of division
 	"""
 
 	file_mesh = mesh.Mesh.from_file(filename)
 
-	triangleSet = file_mesh.vectors
-	triNormVecs = file_mesh.normals
-	forceVecs = np.zeros((len(triangleSet),3))
+	oriTriangleSet = file_mesh.vectors
+	#triNormVecs = file_mesh.normals
 
+	triangleSet = []
+	triNormVecs = []
+
+	for i in range(len(oriTriangleSet)):
+		points, singleTriangleSet, singleNorVecSet = subdivision.barycentric(oriTriangleSet[i][0], oriTriangleSet[i][1], oriTriangleSet[i][2],n)
+		#print(len(triangleSet))
+		#print(len(norVecSet))
+
+		for j in range(len(singleTriangleSet)):
+			triangleSet.append(singleTriangleSet[j])
+			triNormVecs.append(singleNorVecSet[j])
+
+	#normalVectors, triangleSet = subdivisionNew.subdivision(oriTriangleSet,triNormVecs,n)
+
+	forceVecs = np.zeros((len(triNormVecs),3))
 
 	for i in range(len(forceVecs)):
 		forceVecs[i] = -1*triNormVecs[i]*3
